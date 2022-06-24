@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid, regular } from "@fortawesome/fontawesome-svg-core/import.macro";
 import Swal from "sweetalert2";
 
-const fileTypes = ["JPG", "PNG", "GIF", "SVG"];
+const fileTypes = ["JPG", "PNG", "GIF", "SVG", "JPEG"];
 
 export default function UploadImage() {
   const [inputValue, setInputValue] = useState({
