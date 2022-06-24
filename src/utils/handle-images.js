@@ -16,6 +16,7 @@ export const uploadImage = async (fileData, caption) => {
   roomImage.set("image", file);
   roomImage.set("caption", caption);
   await roomImage.save();
+  return true;
 };
 
 export const fetchRoomImages = (roomAddress) => {
