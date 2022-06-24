@@ -1,17 +1,11 @@
-/* import Moralis from "moralis"; */
+import Moralis from "moralis";
 import memories from "./images/Couple-in-a-photo-booth-bro.svg";
 import { connectWallet } from "./utils/web3User";
 
 function Home() {
-  /* let user = Moralis.User.current(); */
-  /*  if (user) {
-    window.location = "/rooms/" + user.get("ethAddress");
-  } */
+  let user = Moralis.User.current();
   return (
-    <header
-      data-aos="fade-down"
-      className="min-h-screen bg-gradient sm:px-6 md:px-16 px-5 pt-9 md:pt-24 pb-9 md:pb-24"
-    >
+    <header data-aos="fade-down" className="min-h-screen bg-gradient sm:px-6 md:px-16 px-5 pt-9 md:pt-24 pb-9 md:pb-24">
       <div className="max-w-7xl">
         <div className="mt-14 md:mt-0">
           <h3 className="text-white text-4xl max-w-3xl font-semibold md:text-[62px] md:leading-[90px]">
@@ -27,15 +21,11 @@ function Home() {
                   window.location = "/rooms/" + address;
                 }}
               >
-                Create My Web3gram
+                {user ? "My Web3gram" : "Create My Web3gram"}
               </button>
             </div>
             <div className="flex justify-center md:justify-end">
-              <img
-                src={memories}
-                alt="memories"
-                className="md:-mt-[210px] md:w-[800px]"
-              />
+              <img src={memories} alt="memories" className="md:-mt-[210px] md:w-[800px]" />
             </div>
           </div>
         </div>

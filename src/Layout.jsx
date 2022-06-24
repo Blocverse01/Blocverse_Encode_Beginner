@@ -4,6 +4,7 @@ import { Outlet, useMatch, useResolvedPath } from "react-router-dom";
 import CustomLink from "./components/CustomLink";
 import Tilt from "react-parallax-tilt";
 import Moralis from "moralis";
+import { connectWallet } from "./utils/web3User";
 
 function Layout() {
   let resolved = useResolvedPath("/");
@@ -19,17 +20,13 @@ function Layout() {
       >
         <div
           className={`${
-            match
-              ? "py-8 flex-col"
-              : "py-2 flex-row items-center border-b border-slate-600 justify-start"
+            match ? "py-8 flex-col" : "py-2 flex-row items-center border-b border-slate-600 justify-start"
           } px-5 md:py-8 md:flex-col flex gap-x-[20px] gap-y-[20px] md:border-b-0 md:items-start`}
         >
           <Tilt>
             <div
               className={`text-white  ${
-                match
-                  ? "text-[35px] text-center justify-center"
-                  : "justify-start text-[17px]"
+                match ? "text-[35px] text-center justify-center" : "justify-start text-[17px]"
               } md:text-[85px] flex md:justify-center`}
             >
               <FontAwesomeIcon icon={solid("camera")} />
@@ -48,22 +45,28 @@ function Layout() {
         <div className="flex fixed bottom-0 h-[47px] z-50 md:h-auto bg-black right-0 left-0 md:relative flex-row items-center md:items-start md:flex-col overflow-x-auto divide-y divide-x md:divide-x-0 md:pt-6 divide-slate-400">
           <CustomLink
             to="/"
-            className="text-slate-300 w-1/2 md:w-full hover:text-portfolio-skyblue hover:font-bold transition-all duration-1000 ease-in-out border-t border-slate-400 flex flex-shrink-0 items-center px-3 h-[inherit] md:py-4 justify-center"
+            className="text-slate-300 w-1/2 text-xs sm:text-base md:w-full hover:text-portfolio-skyblue hover:font-bold transition-all duration-1000 ease-in-out border-t border-slate-400 flex flex-shrink-0 items-center px-3 h-[inherit] md:py-4 justify-center"
           >
             Home
           </CustomLink>
-          {/*  <CustomLink
-            to="/about"
-            className="text-slate-300 w-1/3 md:w-full flex items-center h-[inherit] hover:text-portfolio-skyblue hover:font-bold transition-all duration-1000 ease-in-out  justify-center flex-shrink-0 py-2 md:py-4 px-3"
-          >
-            About
-          </CustomLink> */}
-          <CustomLink
-            to={user ? "/rooms/" + user.get("ethAddress") : "/rooms/create"}
-            className="text-slate-300 w-1/2 md:w-full h-[inherit] flex items-center text-center justify-center py-2 md:py-4 hover:text-portfolio-skyblue hover:font-bold transition-all duration-1000 ease-in-out flex-shrink-0 px-3"
-          >
-            {user ? "My Web3Gram" : "Create My Web3Gram"}
-          </CustomLink>
+          {user ? (
+            <CustomLink
+              to={"/rooms/" + user.get("ethAddress")}
+              className="text-slate-300 text-xs sm:text-base w-1/2 md:w-full h-[inherit] flex items-center text-center justify-center py-2 md:py-4 hover:text-portfolio-skyblue hover:font-bold transition-all duration-1000 ease-in-out flex-shrink-0 px-3"
+            >
+              {"My Web3Gram"}
+            </CustomLink>
+          ) : (
+            <button
+              onClick={async () => {
+                let address = await connectWallet();
+                window.location = "/rooms/" + address;
+              }}
+              className="text-slate-300 text-xs sm:text-base w-1/2 md:w-full h-[inherit] flex items-center text-center justify-center py-2 md:py-4 hover:text-portfolio-skyblue hover:font-bold transition-all duration-1000 ease-in-out flex-shrink-0 px-3"
+            >
+              Create My Web3Gram
+            </button>
+          )}
           <button className="hidden md:block w-full"></button>
         </div>
       </aside>
