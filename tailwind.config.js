@@ -3,14 +3,12 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        portfolio: {
-          pink: "#fc2255",
-          dark: "#1d1d1d",
-          skyblue: "skyblue",
-          gray: "#8d8d8d",
+        theme: {
+          main: "#F8F6F6",
+          dark: "#171105",
         },
       },
     },
   },
-  plugins: [],
+  plugins: [require("@tailwindcss/line-clamp")],
 };
