@@ -28,7 +28,7 @@ export default function UploadImage() {
           <label className="block mb-2">Caption</label>
           <input
             name="caption"
-            className="px-3 py-3 bg-gray-600 text-slate-200 rounded-md w-full"
+            className="px-3 py-3 bg-theme-main text-theme-dark w-full"
             value={gram.caption}
             onChange={handleChange}
             type="text"
@@ -41,47 +41,58 @@ export default function UploadImage() {
             handleChange={(file) => handleChange({ target: { name: "media", value: file } })}
             types={fileTypes}
             children={
-              <div className="text-white cursor-pointer">
+              <div className="text-theme-dark cursor-pointer">
                 {gram.media ? (
                   <div className="relative">
-                    <div className="bg-black p-4 absolute bg-opacity-40 z-10 inset-0 h-[240px] sm:h-[470px] flex items-center justify-center">
+                    <div className="bg-black p-4 absolute bg-opacity-40 z-10 inset-0 h-[180px] md:h-[244.04px] flex items-center justify-center">
                       <div>
                         <div className="text-center">
-                          <FontAwesomeIcon icon={regular("image")} className="text-white text-3xl" />
+                          <FontAwesomeIcon icon={regular("image")} className="text-theme-main text-3xl" />
                         </div>
-                        <div className="text-center mt-[15.45px] text-[15px] font-[600] leading-[27.58px]">
+                        <div className="text-center mt-[15.45px] text-theme-main text-[15px1] font-[600] leading-[27.58px]">
                           Drag and Drop or Click, if you need to Change this Image
                         </div>
                       </div>
                     </div>
                     <img
                       src={URL.createObjectURL(gram.media)}
-                      className="h-[240px] sm:h-[470px] object-cover w-full"
+                      className="h-[180px] md:h-[244.04px] object-scale-down w-full"
                       alt="Thumb"
                     />
                   </div>
                 ) : (
-                  <div className="py-[24px] px-4 bg-gray-800">
-                    <div className="text-center">
-                      <FontAwesomeIcon icon={solid("image")} className="text-white text-4xl" />
+                  <div className="py-[24px] h-[180px] md:h-[244.04px] flex items-center justify-center px-4 bg-theme-main">
+                    <div className="flex-1">
+                      <div className="text-center">
+                        <FontAwesomeIcon icon={solid("image")} className="text-theme-dark text-4xl" />
+                      </div>
+                      <h3 className="text-center mt-[15.45px] text-[15px] font-[600] leading-[27.58px]">
+                        Drag and Drop or Click to Add an Image
+                      </h3>
+                      <h3 className="text-center font-[500] text-[12px] leading-[22.07px]">
+                        Must be JPEG, SVG, PNG or GIF; Must not exceed 10MB
+                      </h3>
                     </div>
-                    <h3 className="text-center mt-[15.45px] text-[15px] font-[600] leading-[27.58px]">
-                      Drag and Drop or Click to Add an Image
-                    </h3>
-                    <h3 className="text-center font-[500] text-[12px] leading-[22.07px]">
-                      Must be JPEG, SVG, PNG or GIF; Must not exceed 10MB
-                    </h3>
                   </div>
                 )}
               </div>
             }
           />
         </div>
-        <div className="flex justify-end">
+        <div className="flex justify-center">
           <button
-            disabled={uploading ? true : false}
-            className="btn"
+            disabled={uploading || !gram.media ? true : false}
+            className="btn bg-theme-main text-theme-dark hover:text-white"
             onClick={async () => {
+              if (!gram.media) {
+                Swal.fire({
+                  title: "Something is wrong 😪!",
+                  text: "Please select a photo",
+                  icon: "error",
+                  confirmButtonText: "I'd select a photo",
+                });
+                return;
+              }
               setUploading(true);
               let uploaded = await uploadImage(gram.media, gram.caption);
               setUploading(false);
