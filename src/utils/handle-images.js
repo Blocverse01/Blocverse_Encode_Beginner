@@ -6,7 +6,7 @@ export const uploadImage = async (fileData, caption) => {
     await connectWallet();
   }
   const user = Moralis.User.current();
-  const file = new Moralis.File(fileData.name, fileData);
+  const file = new Moralis.File(fileData.name.replace(/[^a-zA-Z0-9]/g, "_"), fileData);
   await file.saveIPFS();
   console.log(file.ipfs(), file.hash());
 
