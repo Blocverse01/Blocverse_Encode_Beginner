@@ -58,14 +58,14 @@ function Home() {
           <img
             src={heroPattern}
             alt="pattern"
-            className="absolute z-0 right-0 -top-[54px] lg:top-0 h-[330px]  lg:h-full"
+            className="absolute z-0 -top-[54px] lg:top-[-90px] h-[330px] lg:-right-[9.2rem] lg:h-full"
           />
           <img
             src={heroCards}
             alt="hero-cards"
-            className="absolute z-10 scale-150 left-9 -top-20 lg:scale-110 lg:-left-5 lg:top-[155px]"
+            className="absolute z-10 scale-150 left-9 -top-20 lg:scale-[1.5] 2xl:scale-[1.4] lg:-left-11 2xl:-left-0 lg:top-[300px]"
           />
-          <img src={heroBg} alt="hero-background" className="w-full h-[330px] lg:h-full" />
+          <img src={heroBg} alt="hero-background" className="w-full h-[330px] bottom-0 lg:h-full" />
         </div>
       </header>
     </section>
