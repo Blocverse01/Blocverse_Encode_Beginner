@@ -32,6 +32,9 @@ export default function ConnectWallet() {
       appLogo: blocTix,
     });
   };
+
+  // const UAuthMoralis = new UAuthMoralis()
+
   useEffect(() => {
     if (isAuthenticated) {
       toggle(false);
