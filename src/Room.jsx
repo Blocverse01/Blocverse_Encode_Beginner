@@ -4,11 +4,13 @@ import { useState } from "react";
 import UploadImage from "./UploadImage";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import { Link } from "react-router-dom";
 
 export default function Room() {
   const { address } = useParams();
   const [canUpload, changeUploadState] = useState(false);
   const [images, setImages] = useState([]);
+  const [isLoading, setLoading] = useState(true);
   const query = new Moralis.Query("RoomImages");
   query.equalTo("owner", address);
   query.find().then((images) => {
@@ -19,6 +21,7 @@ export default function Room() {
         caption: image.get("caption"),
       }))
     );
+    setLoading(false);
   });
 
   //let user = Moralis.User.current();
@@ -26,7 +29,7 @@ export default function Room() {
   return (
     <section className="Home-section__wrapper">
       <nav className="Home-nav flex justify-between items-center">
-        <a href="/">
+        <Link to="/">
           <h3 className="logo-text">Web3Gram</h3>
           <svg
             className="lg:ml-[4.6rem] ml-10"
@@ -43,7 +46,7 @@ export default function Room() {
               strokeLinecap="round"
             />
           </svg>
-        </a>
+        </Link>
         <div className="flex justify-end py-4 px-3">
           <button
             onClick={() => {
@@ -56,7 +59,10 @@ export default function Room() {
           </button>
         </div>
       </nav>
-      <div data-aos="fade-left" className="md:px-16 sm:px-6 px-5 pt-5 md:pt-[44.71px] pb-9 md:pb-20">
+      <div
+        data-aos="fade-left"
+        className="md:px-16 sm:px-6 px-5 pt-5 md:pt-[44.71px] pb-9 md:pb-20"
+      >
         <div>
           <div>
             {canUpload ? (
@@ -67,7 +73,10 @@ export default function Room() {
                       onClick={() => changeUploadState(false)}
                       className="h-[38.53px] w-[38.53px] rounded-full bg-theme-main flex items-center justify-center"
                     >
-                      <FontAwesomeIcon icon={solid("times")} className="text-theme-dark" />
+                      <FontAwesomeIcon
+                        icon={solid("times")}
+                        className="text-theme-dark"
+                      />
                     </button>
                   </div>
                   <UploadImage />
@@ -78,11 +87,19 @@ export default function Room() {
             )}
             <div className="grid grid-cols-2 mt-5 mb-12 sm:grid-cols-2 gap-3 lg:gap-[42.56px] md:grid-cols-3 lg:grid-cols-4">
               {images.map((image, index) => (
-                <div key={index} className="block">
+                <div key={index} data-aos="fade-right" className="block">
                   <div className="relative">
                     <div className="absolute bottom-0 p-5 flex items-end justify-end top-12 md:top-36 right-0 left-0 card-gradient">
-                      <a target="_blank" rel="noreferrer" href={image.imageLink} className="text-white">
-                        <FontAwesomeIcon icon={solid("expand")} className="text-2xl md:text-3xl" />
+                      <a
+                        target="_blank"
+                        rel="noreferrer"
+                        href={image.imageLink}
+                        className="text-white"
+                      >
+                        <FontAwesomeIcon
+                          icon={solid("expand")}
+                          className="text-2xl md:text-3xl"
+                        />
                       </a>
                     </div>
                     <img
@@ -104,6 +121,22 @@ export default function Room() {
                 </div>
               ))}
             </div>
+            {isLoading && (
+              <div className="text-center text-3xl md:text-[60px]">
+                <FontAwesomeIcon icon={solid("spinner")} spin /> Loading
+              </div>
+            )}
+            {images.length === 0 && !isLoading && (
+              <div className="text-center">
+                <FontAwesomeIcon
+                  icon={solid("images")}
+                  className="text-7xl md:text-[120px] text-theme-dark"
+                />
+                <p className="text-center mt-2 text-lg md:text-xl">
+                  Your gallery is empty!
+                </p>
+              </div>
+            )}
           </div>
         </div>
       </div>

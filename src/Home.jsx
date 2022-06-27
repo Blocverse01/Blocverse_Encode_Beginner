@@ -1,19 +1,16 @@
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import Moralis from "moralis";
 import heroBg from "./images/hero-bg-image.png";
 import heroPattern from "./images/pattern.svg";
 import heroCards from "./images/hero-cards-full-min.png";
-import { connectWallet } from "./utils/web3User";
-import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
+import ConnectWallet from "./components/auth/moralis/ConnectWalletWithWeb3Auth";
+import { Link } from "react-router-dom";
 
 function Home() {
-  let user = Moralis.User.current();
   return (
     <section className="Home-section__wrapper">
       <header className="Home-header" data-aos="fade-down">
         <div>
           <nav className="Home-nav">
-            <a href="/">
+            <Link to="/">
               <h3 className="logo-text">Web3Gram</h3>
               <svg
                 className="lg:ml-[4.6rem] ml-10"
@@ -30,7 +27,7 @@ function Home() {
                   strokeLinecap="round"
                 />
               </svg>
-            </a>
+            </Link>
           </nav>
           <div className="Home-section">
             <h3 className="hero-header">
@@ -38,21 +35,12 @@ function Home() {
               <span>Immortalized.</span>
             </h3>
             <p className="hero-text">
-              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Curabitur ultricies tortor aliquam lorem.{" "}
+              Keep your memories intact forever with this gateway to unlimited
+              storage. Your photos on the Blockchain at zero cost, safelock
+              those memories you cherish.{" "}
             </p>
             <div className="mt-[17.8px] lg:mt-14">
-              <button
-                className="btn"
-                onClick={async () => {
-                  let address = await connectWallet();
-                  window.location = "/rooms/" + address;
-                }}
-              >
-                <span className="mr-6">{user ? "My Web3gram" : "Get Grammed!"}</span>
-                <span>
-                  <FontAwesomeIcon icon={solid("arrow-right")} />
-                </span>
-              </button>
+              <ConnectWallet />
             </div>
           </div>
         </div>
@@ -65,9 +53,13 @@ function Home() {
           <img
             src={heroCards}
             alt="hero-cards"
-            className="absolute z-10 scale-150 left-9 -top-20 lg:scale-[1.5] 2xl:scale-[1.4] lg:-left-11 2xl:-left-0 lg:top-[300px]"
+            className="absolute z-1 scale-150 left-9 -top-20 lg:scale-[1.5] 2xl:scale-[1.4] lg:-left-11 2xl:-left-0 lg:top-[300px]"
           />
-          <img src={heroBg} alt="hero-background" className="w-full h-[330px] bottom-0 lg:h-full" />
+          <img
+            src={heroBg}
+            alt="hero-background"
+            className="w-full h-[330px] bottom-0 lg:h-full"
+          />
         </div>
       </header>
     </section>
