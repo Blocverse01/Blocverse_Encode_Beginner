@@ -10,7 +10,6 @@ import LoopingImages from "../LoopingImages";
 export default function ConnectWallet() {
   const [isOpen, toggle] = useState(false);
   const [getWalletOpen, setGetWalletOpen] = useState(false);
-  const chainId = process.env.REACT_APP_CHAIN_ID;
   const { authenticate, isAuthenticated, isAuthenticating, user } =
     useMoralis();
   const login = async (options) => {
@@ -32,8 +31,6 @@ export default function ConnectWallet() {
       appLogo: blocTix,
     });
   };
-
-  // const UAuthMoralis = new UAuthMoralis()
 
   useEffect(() => {
     if (isAuthenticated) {
@@ -78,12 +75,13 @@ export default function ConnectWallet() {
                         return;
                       }
                       if (connector.connectorId === "UAuthMoralis") {
-                        await authenticate(uauth);
+                        let connectedUser = await authenticate(uauth);
+                        window.location =
+                          "/rooms/" + connectedUser.get("ethAddress");
                         return;
                       }
                       await login({
                         provider: connector.connectorId,
-                        chainId: chainId,
                         signingMessage: "Log in to Web3Gram",
                       });
                     }}
