@@ -6,6 +6,7 @@ import { connectors, getWallets, uauth } from "./config";
 import { solid } from "@fortawesome/fontawesome-svg-core/import.macro";
 import blocTix from "../WalletIcons/Web3gram.png";
 import LoopingImages from "../LoopingImages";
+import { Link } from "react-router-dom";
 
 export default function ConnectWallet() {
   const [isOpen, toggle] = useState(false);
@@ -40,24 +41,26 @@ export default function ConnectWallet() {
   return (
     <div>
       <div className="flex items-center">
-        <button
-          onClick={async () =>
-            isAuthenticated
-              ? (window.location = `/rooms/${user.get("ethAddress")}`)
-              : toggle(true)
-          }
-          className="btn"
-        >
-          {isAuthenticating && (
-            <FontAwesomeIcon className="mr-2" icon={solid("spinner")} spin />
-          )}
-          <span className="mr-6">
-            {user ? "My Web3gram" : isAuthenticating ? "Connecting" : "GramUp!"}
-          </span>
-          <span>
-            <FontAwesomeIcon icon={solid("arrow-right")} />
-          </span>
-        </button>
+        {isAuthenticated ? (
+          <Link to={`/rooms/${user.get("ethAddress")}`} className="btn">
+            <span className="mr-6">My Web3gram</span>
+            <span>
+              <FontAwesomeIcon icon={solid("arrow-right")} />
+            </span>
+          </Link>
+        ) : (
+          <button onClick={() => toggle(true)} className="btn">
+            {isAuthenticating && (
+              <FontAwesomeIcon className="mr-2" icon={solid("spinner")} spin />
+            )}
+            <span className="mr-6">
+              {isAuthenticating ? "Connecting" : "GramUp!"}
+            </span>
+            <span>
+              <FontAwesomeIcon icon={solid("arrow-right")} />
+            </span>
+          </button>
+        )}
       </div>
       <Modal
         showModal={isOpen}
