@@ -75,10 +75,16 @@ export default function ConnectWallet() {
                         return;
                       }
                       if (connector.connectorId === "UAuthMoralis") {
-                        let connectedUser = await authenticate(uauth);
-                        window.location =
-                          "/rooms/" + connectedUser.get("ethAddress");
-                        return;
+                        try {
+                          let connectedUser = await authenticate(uauth);
+                          if (connectedUser) {
+                            window.location =
+                              "/rooms/" + connectedUser.get("ethAddress");
+                          }
+                        } catch (e) {
+                          console.log(e);
+                          return false;
+                        }
                       }
                       await login({
                         provider: connector.connectorId,
