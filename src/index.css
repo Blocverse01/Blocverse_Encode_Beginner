@@ -10,7 +10,7 @@ body {
 
 @layer base {
   .btn {
-    @apply px-5 transition-all ease-in-out hover:scale-105 hover:rounded-md hover:ml-2.5 hover:mt-2.5 py-3 bg-theme-dark text-white font-normal capitalize hover:bg-blue-600;
+    @apply px-5 py-3 font-normal text-white capitalize transition-all ease-in-out hover:scale-105 hover:rounded-md bg-theme-dark hover:bg-blue-600;
   }
   .Home-section__wrapper {
     @apply max-w-[1512px] mx-auto;
