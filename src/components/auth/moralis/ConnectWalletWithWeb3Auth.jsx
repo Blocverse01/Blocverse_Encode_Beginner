@@ -84,9 +84,10 @@ export default function ConnectWallet() {
                             window.location =
                               "/rooms/" + connectedUser.get("ethAddress");
                           }
+                          return;
                         } catch (e) {
                           console.log(e);
-                          return false;
+                          return;
                         }
                       }
                       await login({
